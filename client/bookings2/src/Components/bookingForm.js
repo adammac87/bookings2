@@ -6,12 +6,12 @@ const BookingForm = (({ addBooking }) => {
 
     const [guestName, setGuestName] = useState("")
     const [guestEmail, setGuestEmail] = useState("")
-    const [isCheckedIn, setIsCheckedIn] = useState("off")
+    const [isCheckedIn, setIsCheckedIn] = useState(false)
 
 
     const handleGuestNameChange = event => setGuestName(event.target.value)
     const handleGuestEmail = event => setGuestEmail(event.target.value)
-    const handleIsCheckedIn = event => setIsCheckedIn(event.target.value)
+    const handleIsCheckedIn = event => setIsCheckedIn(event.target.checked)
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -26,7 +26,7 @@ const BookingForm = (({ addBooking }) => {
 
         setGuestName("")
         setGuestEmail("")
-        setIsCheckedIn("off")
+        setIsCheckedIn(false)
     }
 
 
@@ -44,7 +44,7 @@ const BookingForm = (({ addBooking }) => {
             <input onChange={handleGuestEmail} value={guestEmail} type="email" id="guestEmail" required />
 
             <label htmlFor="isCheckedIn">Checked in?</label>
-            <input onChange={handleIsCheckedIn} value={isCheckedIn} type="checkbox" id="isCheckedIn" />
+            <input onChange={handleIsCheckedIn} checked={isCheckedIn} type="checkbox" id="isCheckedIn" />
 
 
 
