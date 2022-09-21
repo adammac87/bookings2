@@ -1,7 +1,9 @@
 import {useState, useEffect} from 'react';
 import './App.css';
-import { getBookings } from './Services/bookings_services';
+
+import { getBookings, deleteBooking as apiDeleteBooking } from './Services/bookings_services';
 import BookingsGrid from './Components/bookingsGrid';
+import BookingForm from './Components/bookingForm';
 
 
 function App() {
@@ -15,13 +17,29 @@ useEffect(() =>{
   })
 }, [])
 
+const addBooking = (booking) => {
+  let temp = bookings.map(booking => booking);
+  temp.push(booking);
+  setBookings(temp)
+}
+
+const deleteBooking = (id) => {
+  apiDeleteBooking(id).then(()=>{
+    let temp = bookings.map(g=>g);
+    const toDel = bookings.map(g =>g._id).indexOf(id);
+    temp.splice(toDel, 1);
+    setBookings(temp);
+  })
+
+}
+
 
 
   return (
     <div className="App">
       <h1>Very Excellent Bookings App</h1>
-      {/* <BookingForm/> */}
-      <BookingsGrid bookings={bookings}/>
+      <BookingForm addBooking={addBooking}/>
+      <BookingsGrid bookings={bookings}  deleteBooking={deleteBooking}/>
     </div>
   );
 }
