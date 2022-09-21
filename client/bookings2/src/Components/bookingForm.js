@@ -1,46 +1,58 @@
 import { useState } from "react"
 import { postBooking } from "../Services/bookings_services"
 
-const BookingForm = (({addBooking}) => {
+const BookingForm = (({ addBooking }) => {
 
-    const [formData, setFormData] = useState({});
-    
+
+    const [guestName, setGuestName] = useState("")
+    const [guestEmail, setGuestEmail] = useState("")
+    const [isCheckedIn, setIsCheckedIn] = useState("off")
+
+
+    const handleGuestNameChange = event => setGuestName(event.target.value)
+    const handleGuestEmail = event => setGuestEmail(event.target.value)
+    const handleIsCheckedIn = event => setIsCheckedIn(event.target.value)
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        formData
-        formData["guestName"] = formData.guestName;
-        formData["guestEmail"] = formData.guestEmail;
-        formData["isCheckedIn"] = formData.isCheckedIn;
-        postBooking(formData).then((data) =>
-        addBooking(data));
-        
+        const booking = {
+            guestName,
+            guestEmail,
+            isCheckedIn
+        }
+
+        postBooking(booking)
+            .then(result => addBooking(result))
+
+        setGuestName("")
+        setGuestEmail("")
+        setIsCheckedIn("off")
     }
 
-    const onChange = (e) => {
-        formData[e.target.id] = e.target.value;
-        setFormData(formData);
-    }
+
+
+
 
 
     return (
-        
-            <form className="" onSubmit={handleSubmit} method="post">
-                <label htmlFor="guestName">Guest Name:</label>
-                <input onChange={onChange} type="text" id="guestName" required />
 
-                <label htmlFor="guestEmail">Email:</label>
-                <input onChange={onChange} type="email" id="guestEmail" required />
+        <form className="" onSubmit={handleSubmit} method="post">
+            <label htmlFor="guestName">Guest Name:</label>
+            <input onChange={handleGuestNameChange} value={guestName} type="text" id="guestName" required />
 
-                <label htmlFor="isCheckedIn">Checked in?</label>
-                <input onChange={onChange} type="checkbox" id="isCheckedIn" />
+            <label htmlFor="guestEmail">Email:</label>
+            <input onChange={handleGuestEmail} value={guestEmail} type="email" id="guestEmail" required />
 
-    
-
-                <input type="submit" value="Save" id="save" />
-            </form>
-        
-            )});
+            <label htmlFor="isCheckedIn">Checked in?</label>
+            <input onChange={handleIsCheckedIn} value={isCheckedIn} type="checkbox" id="isCheckedIn" />
 
 
-            export default BookingForm;
+
+            <input type="submit" value="Save" id="save" />
+        </form>
+
+    )
+});
+
+
+export default BookingForm;

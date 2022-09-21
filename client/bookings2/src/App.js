@@ -18,7 +18,7 @@ useEffect(() =>{
 }, [])
 
 const addBooking = (booking) => {
-  let temp = bookings.map(booking => booking);
+  let temp = bookings.map(b => b);
   temp.push(booking);
   setBookings(temp)
 }
