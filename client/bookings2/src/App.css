@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "euclid";
+  src: url(../public/EuclidCircularALight.ttf);
+}
+
 .App {
   text-align: center;
 }
